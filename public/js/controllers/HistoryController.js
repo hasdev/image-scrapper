@@ -2,6 +2,7 @@ app.controller('HistoryController', ['$scope', 'history','$state', function($sco
   $scope.history;
   history.getSavedKeywords().then((res) => {
     $scope.history = res.data;
+    console.log($scope.history);
   })
   $scope.viewResult = function(keyword){
       $state.go('historyDetails',{'keyword':keyword});

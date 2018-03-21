@@ -13,14 +13,19 @@ var KeywordSchema = new mongoose.Schema({
         required:true
       }
     }
-  ]
+  ],
+  timestamp:{
+    type:Date,
+    required:true,
+    default: Date.now
+  }
 });
 
 KeywordSchema.methods.toJSON = function(){
   var doc =  this;
   var docObj = doc.toObject();
 
-  return _.pick(docObj,['_id','keyword', 'images']);
+  return _.pick(docObj,['_id','keyword', 'images', 'timestamp']);
 }
 
 KeywordSchema.methods.updateKeyword = function(urls){

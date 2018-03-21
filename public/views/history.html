@@ -17,6 +17,7 @@
       <md-list-item class="md-2-line" ng-repeat="keyword in history" ng-click="viewResult(keyword.keyword)">
         <div class="md-list-item-text" layout="column">
           <h3>{{ keyword.keyword }}</h3>
+          <p>{{ keyword.timestamp | date: 'dd-MM-yyyy HH:mm:ss' }}</p>
         </div>
       </md-list-item>
       <md-divider ></md-divider>

@@ -36,8 +36,8 @@
       <div class="md-headline">Result:</div>
       <md-content>
         <md-list>
-          <md-list-item class="md-3-line" ng-repeat="img in imageData.urls" ng-click="null">
-            <img style="margin:auto;" width="400" ng-src="{{img.url}}" />
+          <md-list-item class="md-3-line" ng-repeat="img in imageData.images" ng-click="null">
+            <img style="margin:auto;" src="{{img.url}}" />
             <md-divider ></md-divider>
           </md-list-item>
         </md-list>

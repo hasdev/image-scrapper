@@ -8,6 +8,7 @@ const path = require('path');
 const fs = require('fs');
 const request = require('request');
 const cheerio = require('cheerio');
+const date = require('node-datetime');
 
 const Jimp = require("jimp");
 const Scraper = require('images-scraper');
@@ -25,10 +26,11 @@ app.use(bodyParser.json());
 app.use(express.static(publicPath));
 
 app.post('/search', (req, res) => {
-  var body = _.pick(req.body, ['keyword']); //picking up required property only
+  var body = _.pick(req.body, ['keyword', 'timestamp']); //picking up required property only
 
   var url = `https://www.google.co.in/search?q=%22${body.keyword}%22&source=lnms&tbm=isch`;
 
+  // var dateTime = date.create().format('Y-m-d H:M:S');
   var resData = {
     keyword:body.keyword,
     images:[]
@@ -67,7 +69,8 @@ app.post('/search', (req, res) => {
 
               var newDoc = new Keyword({
                 keyword: body.keyword,
-                images: resData.images
+                images: resData.images,
+                timestamp: body.timestamp
               });
 
               return newDoc.save()
@@ -84,7 +87,7 @@ app.post('/search', (req, res) => {
 app.get('/keyword', (req, res) => {
 
   // Keyword.find().then((docs) => {
-  Keyword.find({},{'keyword':1, '_id':0}).then((docs) => {
+  Keyword.find({},{'timestamp':2, 'keyword':1, '_id':0}).then((docs) => {
     res.status(200).send(docs);
   })
   .catch((e) => res.status(404).send())

@@ -16,15 +16,15 @@
 <md-content flex layout="row">
   <div flex="20"></div>
   <div flex="60">
-    <div class="md-display-2">Search result for: {{keyword}}</div>
+    <div class="md-display-2">Past image results for: '{{keyword}}'</div>
       <div ng-repeat="set in historyDetails track by $index">
         <md-list flex>
-          <md-subheader class="md-no-sticky">Result Image Set-{{$index+1}}</md-subheader>
-          <md-list-item ng-repeat="img in set.urls" class="md-2-line" ng-click="null">
-            <img  style="margin:auto;"  ng-src="{{img.url}}" />
+          <md-subheader class="md-no-sticky">Result Set {{$index+1}} @ {{ set.timestamp | date: 'dd-MM-yyyy HH:mm:ss' }}</md-subheader>
+          <md-list-item ng-repeat="img in set.images" class="md-2-line" ng-click="null">
+            <img  style="margin:auto;"  src="{{img.url}}" />
           </md-list-item>
-          <md-divider ></md-divider>
         </md-list>
+        <md-divider ></md-divider>
       </div>
   </div>
   <div flex="20"></div>
