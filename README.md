@@ -6,8 +6,8 @@ Google Image Scrapper
 
 ### Prerequisites
 
-*node
-*mongodb
+* node
+* mongodb
 
 ### Installing
 
