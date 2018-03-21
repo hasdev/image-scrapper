@@ -3,13 +3,11 @@
   <button ng-click="search(keyword)">Search</button>
 </div>
 
-<div >
-  <h1>{{imageData.keyword}}</h1>
-  <img ng-src="public/images/donald-0.jpg">
+<div>
+  <h3>Keyword: {{keyword}}</h3>
   <ul>
     <li ng-repeat="img in imageData.urls">
-      <img ng-src="{{img.url}}">
-      {{img.url}}
+      <img ng-if="img.url" width="400" height="400" ng-src="http://localhost:3000{{img.url}}" />
     </li>
   </ul>
 </div>

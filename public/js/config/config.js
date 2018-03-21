@@ -9,7 +9,7 @@ app.config(['$stateProvider','$locationProvider', function($stateProvider, $loca
     controller:'SearchController'
   })
   .state('history',{
-    url:'history',
+    url:'/history',
     templateUrl:'/views/history.html',
     controller: 'HistoryController'
   })
