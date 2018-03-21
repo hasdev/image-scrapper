@@ -1,0 +1,15 @@
+<div>
+  <input type='text' ng-model="keyword" />
+  <button ng-click="search(keyword)">Search</button>
+</div>
+
+<div >
+  <h1>{{imageData.keyword}}</h1>
+  <img ng-src="public/images/donald-0.jpg">
+  <ul>
+    <li ng-repeat="img in imageData.urls">
+      <img ng-src="{{img.url}}">
+      {{img.url}}
+    </li>
+  </ul>
+</div>

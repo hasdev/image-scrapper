@@ -30,24 +30,24 @@ KeywordSchema.methods.toJSON = function(){
   return _.pick(docObj,['_id','keyword', 'urls']);
 }
 
-// KeywordSchema.methods.updateKeyword = function(urls){
-//   var doc = this;
-//
-//   return doc.update({
-//     $set:{
-//       urls:urls
-//     }
-//   });
-// }
-//
-// KeywordSchema.statics.findByKeyword = function(keyword){
-//   var doc = this;
-//
-//   return User.findOne({keyword}).then((doc) => {
-//     console.log(doc);
-//     return Promise.resolve(doc);
-//   })
-// }
+KeywordSchema.methods.updateKeyword = function(urls){
+  var doc = this;
+
+  return doc.update({
+    $set:{
+      urls:urls
+    }
+  });
+}
+
+KeywordSchema.statics.findByKeyword = function(keyword){
+  var doc = this;
+  console.log('here getting keyword',keyword);
+  return doc.findOne({keyword}).then((doc) => {
+    console.log(doc);
+    return Promise.resolve(doc);
+  })
+}
 
 var Keyword = mongoose.model('Keyword', KeywordSchema);
 

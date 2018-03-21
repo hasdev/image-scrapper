@@ -27,7 +27,7 @@ app.post('/search', (req, res) => {
   var imagesRes = [];
   google.list({
     keyword: body.keyword,
-    num: 1,
+    num: 2,
     detail: true
   })
   .then((images) => {
@@ -63,6 +63,14 @@ app.post('/search', (req, res) => {
   .catch((e) => res.status(403).send())
 
 });
+
+app.get('/keyword', (req, res) => {
+
+  Keyword.find().then((docs) => {
+    res.status(200).send(docs);
+  })
+  .catch((e) => res.status(404).send())
+})
 
 app.all('*', function (req, res) {
     res.sendFile(publicPath+'\\index.html');
