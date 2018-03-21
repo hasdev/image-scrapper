@@ -27,7 +27,7 @@ app.post('/search', (req, res) => {
   var imagesRes = [];
   google.list({
     keyword: body.keyword,
-    num: 2,
+    num: 1,
     detail: true
   })
   .then((images) => {
