@@ -27,48 +27,6 @@ app.use(express.static(publicPath));
 app.post('/search', (req, res) => {
   var body = _.pick(req.body, ['keyword']); //picking up required property only
 
-  var imagesRes = [];
-
-  google.list({
-    keyword: body.keyword,
-    num: 15,
-    detail: true
-  })
-  .then((images) => {
-    for(let index in images){
-      Jimp.read(images[index].url)
-      .then((img) => {
-          img.resize(400, 400)            // resizing
-             .quality(70)                 // compressing
-             .greyscale()                 // black and white filter
-             .write("public/images/"+body.keyword+'-'+[index]+"."+images[index].type.split('/')[1]); // wrtitng to HDD
-        })
-        .catch((e) => res.status(404).send(e))
-
-        imagesRes.push({ //creating array with processed image results
-          height:"400",
-          width:"400",
-          url:"/images/"+body.keyword+'-'+[index]+"."+images[index].type.split('/')[1]
-        });
-    }
-
-    var keyword = new Keyword({
-      keyword: body.keyword,
-      urls: imagesRes
-    });
-
-    keyword.save().then((doc) => {
-      res.status(200).send(doc);
-    })
-    .catch((e) => res.status(404).send(e))
-
-  })
-  .catch((e) => res.status(403).send())
-});
-
-app.post('/scrape', (req, res) => {
-  var body = _.pick(req.body, ['keyword']); //picking up required property only
-
   var url = `https://www.google.co.in/search?q=%22${body.keyword}%22&source=lnms&tbm=isch`;
 
   var resData = {
