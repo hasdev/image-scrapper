@@ -2,8 +2,8 @@
 
 Uses request to fetch html, cheerio to parse it for images. Jimp for compression and writing to server. MongoDb to store final results.
 Uses angularjs on client-side, can search for images and retrieve past search data. Ui-component lib used is angular-material.
-public folder holds the client app.
-server folder holds the api-backend.
+* public folder holds the client app.
+* server folder holds the api-backend.
 
 ## Getting Started
 
