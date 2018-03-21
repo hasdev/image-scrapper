@@ -9,7 +9,18 @@ const request = require('request');
 const cheerio = require('cheerio');
 const Jimp = require("jimp");
 
-const publicPath = path.join(__dirname, '../public')
+var prod;
+var env = process.env.NODE_ENV || 'development';
+
+if(env === 'development' || env === 'test'){
+  prod = '';
+}
+else {
+  prod = '/dist'; // serve from dist on production
+}
+
+const publicPath = path.join(__dirname, `../public${prod}`)
+
 
 const { mongoose } = require('./db/mongoose');
 const { Keyword } = require('./models/keyword');
@@ -53,10 +64,10 @@ app.post('/search', (req, res) => {
                   jimpPromises.push(//combining all promises
                     jimpImg.quality(70)
                             .greyscale()
-                            .write("public/images/"+body.keyword.trim()+'-'+[index]+".png") // writing to public/images
+                            .write(`public${prod}/images/`+body.keyword.replace(/\s/g,'')+'-'+[index]+".png") // writing to public/images, overriding with .png
                   );
                 })
-              resData.images[index].url = "/images/"+body.keyword.trim()+'-'+[index]+".png"; // updating url to our resource
+              resData.images[index].url = "/images/"+body.keyword.replace(/\s/g,'')+'-'+[index]+".png"; // updating url to our resource
             })
 
             Promise.all(jimpPromises).then(() => {

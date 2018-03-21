@@ -1,8 +1,8 @@
-app.service('search', ['$http', function($http){
+app.service('search', function($http){
   this.getImages = function(keyword, timestamp){
     return $http.post('/search', {
-        keyword,
-        timestamp
+        keyword:keyword,
+        timestamp:timestamp
     });
   }
-}])
+})

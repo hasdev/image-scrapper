@@ -1,9 +1,11 @@
 app.controller('HistoryDetailsController', ['$scope', 'historyDetails', '$stateParams', function($scope, historyDetails, $stateParams){
   $scope.historyDetails;
+  $scope.keyword = $stateParams.keyword; //from url/state
 
-  $scope.keyword = $stateParams.keyword;
-  historyDetails.getImgList($scope.keyword).then((res) => {
+  historyDetails.getImgList($scope.keyword).then(function(res){//calling service
     $scope.historyDetails = res.data;
-    console.log($scope.historyDetails);
+  })
+  .catch(function(e){
+    console.log('Service Error: historyDetails',e);
   })
 }]);

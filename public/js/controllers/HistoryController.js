@@ -1,10 +1,14 @@
 app.controller('HistoryController', ['$scope', 'history','$state', function($scope, history, $state){
   $scope.history;
-  history.getSavedKeywords().then((res) => {
+
+  history.getSavedKeywords().then(function(res) { //calling service
     $scope.history = res.data;
-    console.log($scope.history);
   })
-  $scope.viewResult = function(keyword){
+  .catch(function(e){
+    console.log('Service Error: history',e);
+  })
+
+  $scope.viewResult = function(keyword){//to view past searches result
       $state.go('historyDetails',{'keyword':keyword});
-    };
+  };
 }])

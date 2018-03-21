@@ -6,16 +6,15 @@ app.controller('SearchController', ['$scope', 'search', function($scope, search)
   $scope.search = function(){
     $scope.enableSearch = true;
     $scope.showProgress = true;
-    console.log('Searching with '+$scope.keyword);
-    search.getImages($scope.keyword, new Date().getTime() ).then((res) => {
+
+    search.getImages($scope.keyword, new Date().getTime() ).then(function(res){//calling service
       $scope.imageData = res.data;
       $scope.showProgress = false;
       $scope.enableSearch = false;
 
-      console.log('Search Success: ',$scope.imageData);
     })
-    .catch((e) => {
-      console.log('API error ', e);
+    .catch(function(e){
+      console.log('Service Error: search',e);
     })
   }
 }])
