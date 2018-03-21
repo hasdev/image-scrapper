@@ -29,7 +29,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.use(express.static(publicPath));
+app.use('/',express.static(publicPath));
 
 app.post('/search', (req, res) => {
   var body = _.pick(req.body, ['keyword', 'timestamp']); //picking up required property only
