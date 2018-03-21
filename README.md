@@ -30,7 +30,7 @@ For local, a mongodb instance should be running at localhost:27017
 ## Deployment
 
 The app is deployed using heroku on [https://powerful-dusk-34453.herokuapp.com/](https://powerful-dusk-34453.herokuapp.com/)
-On production the app is served via dist setup by gulp.
+On production the app is served via dist setup using gulp.
 
 ## References
 
