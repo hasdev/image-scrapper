@@ -31,32 +31,33 @@ app.post('/search', (req, res) => {
     detail: true
   })
   .then((images) => {
-    for(let index in images){
-      Jimp.read(images[index].url)
-      .then((img) => {
-          img.resize(400, 400)            // resizing
-             .quality(70)                 // compressing
-             .greyscale()                 // black and white filter
-             .write("public/images/"+body.keyword+'-'+[index]+"."+images[index].type.split('/')[1]); // wrtitng to HDD
-        })
-        .catch((e) => res.status(404).send(e))
-
-        imagesRes.push({
-          height:"400",
-          width:"400",
-          url:"public/images/"+body.keyword+'-'+[index]+"."+images[index].type.split('/')[1]
-        });
-    }
-
-    var keyword = new Keyword({
-      keyword:body.keyword,
-      urls:imagesRes
-    });
-
-    keyword.save().then((doc) => {
-      res.status(200).send(doc);
-    })
-    .catch((e) => res.status(404).send(e))
+    res.send({'working':'working'})
+    // for(let index in images){
+    //   Jimp.read(images[index].url)
+    //   .then((img) => {
+    //       img.resize(400, 400)            // resizing
+    //          .quality(70)                 // compressing
+    //          .greyscale()                 // black and white filter
+    //          .write("public/images/"+body.keyword+'-'+[index]+"."+images[index].type.split('/')[1]); // wrtitng to HDD
+    //     })
+    //     .catch((e) => res.status(404).send(e))
+    //
+    //     imagesRes.push({
+    //       height:"400",
+    //       width:"400",
+    //       url:"public/images/"+body.keyword+'-'+[index]+"."+images[index].type.split('/')[1]
+    //     });
+    // }
+    //
+    // var keyword = new Keyword({
+    //   keyword:body.keyword,
+    //   urls:imagesRes
+    // });
+    //
+    // keyword.save().then((doc) => {
+    //   res.status(200).send(doc);
+    // })
+    // .catch((e) => res.status(404).send(e))
 
 
   })
