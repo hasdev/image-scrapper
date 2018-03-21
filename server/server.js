@@ -106,9 +106,9 @@ app.get('/keyword/:keyword', (req, res) => {
   .catch((e) => res.status(404).send())
 })
 
-app.get('*', function (req, res) { //redirection for angular routing
-    res.sendFile(path.resolve(publicPath+'\index.html'));
-})
+// app.get('*', function (req, res) { //redirection for angular routing
+//     res.sendFile(path.resolve(publicPath+'\index.html'));
+// })
 
 app.listen(PORT, () => {
   console.log('Server is up at:',PORT );
