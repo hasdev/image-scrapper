@@ -7,27 +7,20 @@ var KeywordSchema = new mongoose.Schema({
     required:true,
     trim:true,
   },
-  urls: [{
-    height:{
-      type:String,
-      required:true
-    },
-    width:{
-      type:String,
-      required:true
-    },
-    url:{
-      type: String,
-      required: true,
+  images: [{
+      url:{
+        type:String,
+        required:true
+      }
     }
-  }]
+  ]
 });
 
 KeywordSchema.methods.toJSON = function(){
   var doc =  this;
   var docObj = doc.toObject();
 
-  return _.pick(docObj,['_id','keyword', 'urls']);
+  return _.pick(docObj,['_id','keyword', 'images']);
 }
 
 KeywordSchema.methods.updateKeyword = function(urls){

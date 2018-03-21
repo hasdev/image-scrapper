@@ -5,6 +5,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const _ = require('lodash');
 const path = require('path');
+const fs = require('fs');
+const request = require('request');
+const cheerio = require('cheerio');
 
 const Jimp = require("jimp");
 const Scraper = require('images-scraper');
@@ -42,7 +45,7 @@ app.post('/search', (req, res) => {
         })
         .catch((e) => res.status(404).send(e))
 
-        imagesRes.push({
+        imagesRes.push({ //creating array with processed image results
           height:"400",
           width:"400",
           url:"/images/"+body.keyword+'-'+[index]+"."+images[index].type.split('/')[1]
@@ -61,8 +64,64 @@ app.post('/search', (req, res) => {
 
   })
   .catch((e) => res.status(403).send())
-
 });
+
+app.post('/scrape', (req, res) => {
+  var body = _.pick(req.body, ['keyword']); //picking up required property only
+
+  var url = `https://www.google.co.in/search?q=%22${body.keyword}%22&source=lnms&tbm=isch`;
+
+  var resData = {
+    keyword:body.keyword,
+    images:[]
+  };
+
+  request(url, function(error, response, html){
+        if(!error){
+            var $ = cheerio.load(html);
+            var count = 0;
+            var jimpPromises = [];
+
+            $('img', 'div#search').filter(function(){
+                if(count == 15)
+                  return;
+                var data = $(this);
+                var img = data.attr('src');
+                count++;
+
+                resData.images.push({url:img});
+
+            })
+
+            resData.images.forEach((imgObject, index) => {
+              Jimp.read(imgObject.url)
+                .then((jimpImg) => {
+                  jimpPromises.push(
+                    jimpImg.quality(70)
+                            .greyscale()
+                            .write("public/images/"+body.keyword+'-'+[index]+".png")
+                  );
+                })
+              resData.images[index].url = "/images/"+body.keyword+'-'+[index]+".png";
+            })
+
+            Promise.all(jimpPromises).then(() => {
+
+              var newDoc = new Keyword({
+                keyword: body.keyword,
+                images: resData.images
+              });
+
+              return newDoc.save()
+            })
+            .then((doc) => {
+              res.status(200).send(doc);
+            })
+            .catch((e) => res.status(404).send(e))
+        }
+    })
+
+})
 
 app.get('/keyword', (req, res) => {
 
