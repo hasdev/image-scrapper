@@ -106,8 +106,8 @@ app.get('/keyword/:keyword', (req, res) => {
   .catch((e) => res.status(404).send())
 })
 
-app.all('*', function (req, res) { //redirection for angular routing
-    res.sendFile(publicPath+'\\index.html');
+app.get('*', function (req, res) { //redirection for angular routing
+    res.sendFile(path.resolve(publicPath+'\index.html'));
 })
 
 app.listen(PORT, () => {
