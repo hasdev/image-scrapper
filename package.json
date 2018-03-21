@@ -1,0 +1,19 @@
+{
+  "name": "nash",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "start-watch": "nodemon server/server.js",
+    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha server/**/*.test.js"
+  },
+  "author": "Udhay Singh Manhas",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.14.0",
+    "lodash": "^4.17.5",
+    "mongoose": "^5.0.11"
+  }
+}

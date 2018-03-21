@@ -1,0 +1,12 @@
+{
+  "test":{
+    "PORT":3000,
+    "MONGODB_URI":"mongodb://localhost:27017/ImageScrapperTest",
+    "JWT_SECRET":"asdsadsghgjgh56 7a"
+  },
+  "development":{
+    "PORT":3000,
+    "MONGODB_URI":"mongodb://localhost:27017/ImageScrapper",
+    "JWT_SECRET":"asdsa  747676dsa"
+  }
+}
