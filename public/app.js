@@ -1,1 +1,1 @@
-window.app = angular.module('app',['ui.router', 'ngAria','ngAnimate', 'ngMessages']);
+window.app = angular.module('app',['ui.router', 'ngMaterial','ngAria','ngAnimate', 'ngMessages']);

@@ -1,9 +1,21 @@
-<div>
-  <input type='text' ng-model="keyword" />
-  <button ng-click="search(keyword)">Search</button>
-</div>
+<md-content flex>
+  <form name="searchForm" flex="50" novalidate layout-align="center center">
+    <md-input-container layout layout-align="center center">
+      <label>Enter Keywords</label>
+      <input required md-no-asterisk name="keyword" ng-model="keyword">
+      <div ng-messages="searchForm.keyword.$error">
+        <div ng-message="required">This is required.</div>
+        <div ng-message="md-maxlength">The keyword must be less than 15 characters long.</div>
+      </div>
+    </md-input-container>
+    <md-input-container layout layout-align="center center">
+      <md-button ng-disabled="searchForm.$invalid" class="md-raised md-primary" ng-click="search(keyword)">Search</md-button>
+    </md-input-container>
+  </form>
+</md-content>
 
-<div>
+
+<div ng-if="$scope.imageData != undefined">
   <h3>Keyword: {{keyword}}</h3>
   <ul>
     <li ng-repeat="img in imageData.urls">
