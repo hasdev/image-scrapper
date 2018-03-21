@@ -1,6 +1,6 @@
 app.config(['$stateProvider','$locationProvider', function($stateProvider, $locationProvider){
 
-  $locationProvider.html5Mode(true); //for pretty url
+  // $locationProvider.html5Mode(true); //for pretty url
 
   //ui-router
   $stateProvider
