@@ -5,14 +5,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const _ = require('lodash');
 const path = require('path');
-const fs = require('fs');
 const request = require('request');
 const cheerio = require('cheerio');
-const date = require('node-datetime');
-
 const Jimp = require("jimp");
-const Scraper = require('images-scraper');
-const google = new Scraper.Google();
 
 const publicPath = path.join(__dirname, '../public')
 
@@ -30,8 +25,7 @@ app.post('/search', (req, res) => {
 
   var url = `https://www.google.co.in/search?q=%22${body.keyword}%22&source=lnms&tbm=isch`;
 
-  // var dateTime = date.create().format('Y-m-d H:M:S');
-  var resData = {
+  var resData = { //resData from scraping
     keyword:body.keyword,
     images:[]
   };
@@ -42,31 +36,31 @@ app.post('/search', (req, res) => {
             var count = 0;
             var jimpPromises = [];
 
-            $('img', 'div#search').filter(function(){
+            $('img', 'div#search').filter(function(){ //searching for el img under div with id search
                 if(count == 15)
                   return;
-                var data = $(this);
-                var img = data.attr('src');
-                count++;
 
-                resData.images.push({url:img});
+                var data = $(this);
+                var img = data.attr('src'); //extractiong src
+                count++;
+                resData.images.push({url:img}); //pushing to store
 
             })
 
-            resData.images.forEach((imgObject, index) => {
+            resData.images.forEach((imgObject, index) => { //using foreach to preserve index value
               Jimp.read(imgObject.url)
                 .then((jimpImg) => {
-                  jimpPromises.push(
+                  jimpPromises.push(//combining all promises
                     jimpImg.quality(70)
                             .greyscale()
-                            .write("public/images/"+body.keyword+'-'+[index]+".png")
+                            .write("public/images/"+body.keyword.trim()+'-'+[index]+".png") // writing to public/images
                   );
                 })
-              resData.images[index].url = "/images/"+body.keyword+'-'+[index]+".png";
+              resData.images[index].url = "/images/"+body.keyword.trim()+'-'+[index]+".png"; // updating url to our resource
             })
 
             Promise.all(jimpPromises).then(() => {
-
+              //when jimp completes its task save to db and return res
               var newDoc = new Keyword({
                 keyword: body.keyword,
                 images: resData.images,
@@ -86,23 +80,22 @@ app.post('/search', (req, res) => {
 
 app.get('/keyword', (req, res) => {
 
-  // Keyword.find().then((docs) => {
-  Keyword.find({},{'timestamp':2, 'keyword':1, '_id':0}).then((docs) => {
+  Keyword.find({},{'timestamp':2, 'keyword':1, '_id':0}).then((docs) => {//find all and get mentioned properties only
     res.status(200).send(docs);
   })
   .catch((e) => res.status(404).send())
 })
 
 app.get('/keyword/:keyword', (req, res) => {
-    var keyword = req.params.keyword;
-  // Keyword.find().then((docs) => {
-  Keyword.find({keyword}).then((docs) => {
+  var keyword = req.params.keyword;
+
+  Keyword.find({keyword}).then((docs) => {//find by keyword
     res.status(200).send(docs);
   })
   .catch((e) => res.status(404).send())
 })
 
-app.all('*', function (req, res) {
+app.all('*', function (req, res) { //redirection for angular routing
     res.sendFile(publicPath+'\\index.html');
 })
 
