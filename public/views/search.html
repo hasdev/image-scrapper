@@ -1,25 +1,48 @@
-<md-content flex>
-  <form name="searchForm" flex="50" novalidate layout-align="center center">
-    <md-input-container layout layout-align="center center">
-      <label>Enter Keywords</label>
-      <input required md-no-asterisk name="keyword" ng-model="keyword">
-      <div ng-messages="searchForm.keyword.$error">
-        <div ng-message="required">This is required.</div>
-        <div ng-message="md-maxlength">The keyword must be less than 15 characters long.</div>
+<md-toolbar class="md-whiteframe-2dp">
+    <div class="md-toolbar-tools content">
+        <md-button class="md-icon-button m-r-8" hide-gt-sm aria-label="Toggle Menu">
+            <md-icon class="material-icons " >
+                menu
+            </md-icon>
+        </md-button>
+        <span class='special-text' >Image Scraper</span>
+        <span flex></span>
+        <md-button ui-sref="history"  >
+            View Search History
+        </md-button>
       </div>
-    </md-input-container>
-    <md-input-container layout layout-align="center center">
-      <md-button ng-disabled="searchForm.$invalid" class="md-raised md-primary" ng-click="search(keyword)">Search</md-button>
-    </md-input-container>
-  </form>
+</md-toolbar>
+
+<md-content flex layout="row">
+  <div flex="20"></div>
+  <div flex="60">
+    <div class="md-display-2">Search Images</div>
+    <form name="searchForm" flex novalidate >
+      <md-input-container layout layout-align="center center">
+        <label>Enter Keywords</label>
+        <input required md-no-asterisk name="keyword" ng-model="keyword">
+        <div ng-messages="searchForm.keyword.$error">
+          <div ng-message="required">Field required.</div>
+        </div>
+      </md-input-container>
+      <md-input-container layout layout-align="center center">
+        <md-button ng-disabled="searchForm.$invalid || enableSearch" class="md-raised md-primary" ng-click="search(keyword)">
+          <span ng-show="!showProgress">Search</span>
+          <md-progress-circular style="margin:auto" ng-show="showProgress" class="md-warn md-hue-2" md-diameter="20px"></md-progress-circular>
+        </md-button>
+      </md-input-container>
+    </form>
+    <div>
+      <div class="md-headline">Result:</div>
+      <md-content>
+        <md-list>
+          <md-list-item class="md-3-line" ng-repeat="img in imageData.urls" ng-click="null">
+            <img style="margin:auto;" width="400" ng-src="{{img.url}}" />
+            <md-divider ></md-divider>
+          </md-list-item>
+        </md-list>
+      </md-content>
+    </div>
+  </div>
+  <div flex="20"></div>
 </md-content>
-
-
-<div ng-if="$scope.imageData != undefined">
-  <h3>Keyword: {{keyword}}</h3>
-  <ul>
-    <li ng-repeat="img in imageData.urls">
-      <img ng-if="img.url" width="400" height="400" ng-src="http://localhost:3000{{img.url}}" />
-    </li>
-  </ul>
-</div>

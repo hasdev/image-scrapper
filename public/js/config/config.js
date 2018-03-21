@@ -13,4 +13,14 @@ app.config(['$stateProvider','$locationProvider', function($stateProvider, $loca
     templateUrl:'/views/history.html',
     controller: 'HistoryController'
   })
+  .state('historyDetails',{
+    url:'/history/images?keyword',
+    templateUrl:'/views/historyDetails.html',
+    controller: 'HistoryDetailsController',
+    params: {
+      keyword: {
+        value: 'DefaultKeyword'
+      }
+    }
+  })
 }]);

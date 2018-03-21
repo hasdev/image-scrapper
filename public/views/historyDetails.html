@@ -1,0 +1,31 @@
+<md-toolbar class="md-whiteframe-2dp">
+    <div class="md-toolbar-tools content">
+        <md-button class="md-icon-button m-r-8" hide-gt-sm aria-label="Toggle Menu">
+            <md-icon class="material-icons " >
+                menu
+            </md-icon>
+        </md-button>
+        <span class='special-text' >Image Scraper</span>
+        <span flex></span>
+        <md-button ui-sref="history"  >
+            View Search History
+        </md-button>
+      </div>
+</md-toolbar>
+
+<md-content flex layout="row">
+  <div flex="20"></div>
+  <div flex="60">
+    <div class="md-display-2">Search result for: {{keyword}}</div>
+      <div ng-repeat="set in historyDetails track by $index">
+        <md-list flex>
+          <md-subheader class="md-no-sticky">Result Image Set-{{$index+1}}</md-subheader>
+          <md-list-item ng-repeat="img in set.urls" class="md-2-line" ng-click="null">
+            <img  style="margin:auto;"  ng-src="{{img.url}}" />
+          </md-list-item>
+          <md-divider ></md-divider>
+        </md-list>
+      </div>
+  </div>
+  <div flex="20"></div>
+</md-content>

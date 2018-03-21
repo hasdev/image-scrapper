@@ -28,7 +28,7 @@ app.post('/search', (req, res) => {
 
   google.list({
     keyword: body.keyword,
-    num: 1,
+    num: 15,
     detail: true
   })
   .then((images) => {
@@ -66,7 +66,17 @@ app.post('/search', (req, res) => {
 
 app.get('/keyword', (req, res) => {
 
-  Keyword.find().then((docs) => {
+  // Keyword.find().then((docs) => {
+  Keyword.find({},{'keyword':1, '_id':0}).then((docs) => {
+    res.status(200).send(docs);
+  })
+  .catch((e) => res.status(404).send())
+})
+
+app.get('/keyword/:keyword', (req, res) => {
+    var keyword = req.params.keyword;
+  // Keyword.find().then((docs) => {
+  Keyword.find({keyword}).then((docs) => {
     res.status(200).send(docs);
   })
   .catch((e) => res.status(404).send())
