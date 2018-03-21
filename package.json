@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "./node_modules/bower/bin/bower install && ./node_modules/gulp/bin/gulp build",
+    "postinstall": "./node_modules/bower/bin/bower install && gulp build",
     "start": "node server/server.js",
     "start-watch": "nodemon server/server.js"
   },
   "author": "Udhay Singh Manhas",
   "license": "ISC",
+  "engine": {
+    "node": "9.5.0"
+  },
   "dependencies": {
     "body-parser": "^1.18.2",
     "bower": "^1.8.2",
